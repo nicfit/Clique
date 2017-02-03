@@ -1,0 +1,6 @@
+wheel
+watchdog
+tox
+flake8
+coverage
+Sphinx

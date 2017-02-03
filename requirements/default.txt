@@ -1,0 +1,4 @@
+cryptography
+jwcrypto
+#git+https://github.com/simo5/jwcrypto.git@master
+requests

@@ -1,0 +1,6 @@
+- Remote ChainStore
+- Refacor 'blockchain' clique command into module, etc.
+~ Grant and addGrant shold be more pythonic
+x Pull request against jwcrypto for JWK + cmt fix
+- API docstrings, and generated docs
+- Key comments (cmt)
