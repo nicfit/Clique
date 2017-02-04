@@ -1,10 +1,35 @@
-================
-Clique python
-================
+==============
+Clique Python
+==============
 
-Python API for ``Clique`` block chains; ID chains and auth chains included.
+Python API for Clique block chains; ID chains and auth chains included.
 
 Invented by Andrew Biggs <balthorium@gmail.com>, and contributed to by others.
+
+Status
+------
+.. image:: https://img.shields.io/pypi/v/clique.svg
+   :target: https://pypi.python.org/pypi/clique/
+   :alt: Latest Version
+.. image:: https://img.shields.io/pypi/status/clique.svg
+   :target: https://pypi.python.org/pypi/clique/
+   :alt: Project Status
+.. image:: https://travis-ci.org/nicfit/clique.svg?branch=master
+   :target: https://travis-ci.org/nicfit/clique
+   :alt: Build Status
+.. image:: https://img.shields.io/pypi/l/clique.svg
+   :target: https://pypi.python.org/pypi/clique/
+   :alt: License
+.. image:: https://img.shields.io/pypi/pyversions/clique.svg
+   :target: https://pypi.python.org/pypi/clique/
+   :alt: Supported Python versions
+.. image:: https://coveralls.io/repos/nicfit/clique/badge.svg
+   :target: https://coveralls.io/r/nicfit/clique
+   :alt: Coverage Status
+
+Features
+--------
+
 
 Requirements
 ------------

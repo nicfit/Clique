@@ -3,7 +3,7 @@ import json
 import requests
 from abc import ABCMeta, abstractmethod
 
-from .log import getLogger
+from . import getLogger
 from .common import thumbprint, newJwk
 
 log = getLogger(__name__)

@@ -2,5 +2,8 @@ wheel
 watchdog
 tox
 flake8
-coverage
+twine
 Sphinx
+check-manifest
+#gitchangelog
+git+https://github.com/nicfit/gitchangelog.git

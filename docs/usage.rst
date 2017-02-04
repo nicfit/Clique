@@ -2,7 +2,7 @@
 Usage
 ========
 
-To use clique in a project::
+To use Clique in a project::
 
     import clique
 

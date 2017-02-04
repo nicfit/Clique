@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# clique documentation build configuration file, created by
+# Clique documentation build configuration file, created by
 # sphinx-quickstart on Tue Jul  9 22:26:36 2013.
 #
 # This file is execfile()d with the current directory set to its
@@ -24,14 +24,15 @@ import sys
 
 # Get the project root dir, which is the parent dir of this
 cwd = os.getcwd()
-project_root = os.path.dirname(cwd)
+project_root = os.path.join(".", os.path.dirname(cwd))
 
 # Insert the project root dir as the first element in the PYTHONPATH.
 # This lets us ensure that the source package is imported, and that its
 # version is used.
 sys.path.insert(0, project_root)
 
-from clique import (__project_name__, __version__, __years__, __author__)
+from clique.__about__ import (
+    __project_name__, __version__, __years__, __author__)
 
 # -- General configuration ---------------------------------------------
 
@@ -40,7 +41,11 @@ from clique import (__project_name__, __version__, __years__, __author__)
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode',
+              'sphinx.ext.napoleon']
+
+# Combine class and __init__ docs.
+autoclass_content = 'both'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -56,7 +61,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = __project_name__
-copyright = '{years}, Cisco Systems'.format(years=__years__)
+copyright = '{years}, {author}'.format(years=__years__, author=__author__)
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout

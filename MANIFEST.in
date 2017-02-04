@@ -1,12 +1,19 @@
-#include AUTHORS.rst
-#include CONTRIBUTING.rst
-#include HISTORY.rst
-#include LICENSE
+include AUTHORS.rst
+include CONTRIBUTING.rst
+include HISTORY.rst
+include LICENSE
 include README.rst
+include Makefile
+include tox.ini
 
 graft docs
-graft tests
+prune docs/_build
+
+recursive-include ./tests *.py
+
+exclude .gitchangelog.rc
 global-exclude __pycache__
+global-exclude .editorconfig
 global-exclude *.py[co]
 
 recursive-include requirements *.txt

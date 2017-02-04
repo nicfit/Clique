@@ -3,7 +3,7 @@ import json
 import requests
 from abc import ABCMeta, abstractmethod
 
-from .log import getLogger
+from . import getLogger
 from .blockchain import BlockChain
 
 log = getLogger(__name__)

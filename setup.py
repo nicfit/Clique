@@ -2,33 +2,34 @@
 # -*- coding: utf-8 -*-
 import os
 import re
+import sys
 from setuptools import setup, find_packages
 
 
 classifiers = [
-    'Development Status :: 2 - Pre-Alpha',
-    'Intended Audience :: Developers',
-    'License :: OSI Approved :: GPL License',
-    'Operating System :: POSIX',
-    'Natural Language :: English',
-    'Programming Language :: Python',
-    "Programming Language :: Python :: 2",
-    'Programming Language :: Python :: 2.7',
-    'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.3',
-    'Programming Language :: Python :: 3.4',
-    'Programming Language :: Python :: 3.5',
+    "Intended Audience :: Developers",
+    "Operating System :: POSIX",
+    "Natural Language :: English",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    # XXX Remove to enable PyPi uploads
+    "Private :: Do Not Upload",
 ]
 
 
 def getPackageInfo():
     info_dict = {}
     info_keys = ["version", "name", "author", "author_email", "url", "license",
-                 "description"]
+                 "description", "release_name", "github_url"]
     key_remap = {"name": "project_name"}
 
-    base = os.path.abspath(os.path.dirname(__file__))
-    with open(os.path.join(base, "clique/__init__.py")) as infof:
+    with open(os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                           ".",
+                           "clique",
+                           "__about__.py")) as infof:
         for line in infof:
             for what in info_keys:
                 rex = re.compile(r"__{what}__\s*=\s*['\"](.*?)['\"]"
@@ -40,39 +41,80 @@ def getPackageInfo():
                     continue
                 info_dict[what] = m.groups()[0]
 
+    if sys.version_info[:2] >= (3, 4):
+        vparts = info_dict["version"].split("-", maxsplit=1)
+    else:
+        vparts = info_dict["version"].split("-", 1)
+    info_dict["release"] = vparts[1] if len(vparts) > 1 else "final"
     return info_dict
 
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
+readme = ""
+if os.path.exists("README.rst"):
+    with open("README.rst") as readme_file:
+        readme = readme_file.read()
 
-'''
-with open('HISTORY.rst') as history_file:
-    history = history_file.read().replace('.. :changelog:', '')
-'''
 history = ""
+if os.path.exists("HISTORY.rst"):
+    with open("HISTORY.rst") as history_file:
+        history = history_file.read().replace(".. :changelog:", "")
+
 
 def requirements(filename):
-    return open('requirements/' + filename).read().splitlines()
+    reqfile = os.path.join("requirements", filename)
+    if os.path.exists(reqfile):
+        return open(reqfile).read().splitlines()
+    else:
+        return ""
 
 
 pkg_info = getPackageInfo()
+if pkg_info["release"].startswith("a"):
+    #classifiers.append("Development Status :: 1 - Planning")
+    #classifiers.append("Development Status :: 2 - Pre-Alpha")
+    classifiers.append("Development Status :: 3 - Alpha")
+elif pkg_info["release"].startswith("b"):
+    classifiers.append("Development Status :: 4 - Beta")
+else:
+    classifiers.append("Development Status :: 5 - Production/Stable")
+    #classifiers.append("Development Status :: 6 - Mature")
+    #classifiers.append("Development Status :: 7 - Inactive")
 
-src_dist_tgz = "{name}-{version}.tar.gz".format(**pkg_info)
-pkg_info["download_url"] = "{}/releases/{}".format(pkg_info["url"],
-                                                   src_dist_tgz)
-
-setup(classifiers=classifiers,
-      package_dir={'clique': 'clique'},
-      packages=find_packages('.','clique'),
-      zip_safe=False,
-      platforms=["Any",],
-      keywords=['blockchain'],
-      include_package_data=True,
-      install_requires=requirements("default.txt"),
-      tests_require=requirements("test.txt"),
-      test_suite='tests',
-      long_description=readme + '\n\n' + history,
-      package_data={},
-      **pkg_info
+gz = "{name}-{version}.tar.gz".format(**pkg_info)
+pkg_info["download_url"] = (
+    "{github_url}/releases/downloads/v{version}/{gz}"
+    .format(gz=gz, **pkg_info)
 )
+
+
+def package_files(directory):
+    paths = []
+    for (path, _, filenames) in os.walk(directory):
+        for filename in filenames:
+            paths.append(os.path.join("..", path, filename))
+    return paths
+
+if sys.argv[1:] and sys.argv[1] == "--release-name":
+    print(pkg_info["release_name"])
+    sys.exit(0)
+else:
+    setup(classifiers=classifiers,
+          package_dir={"": "."},
+          packages=find_packages(".",
+                                 exclude=["tests", "tests.*"]),
+          zip_safe=False,
+          platforms=["Any"],
+          keywords=["clique"],
+          install_requires=requirements("default.txt"),
+          tests_require=requirements("test.txt"),
+          test_suite="./tests",
+          long_description=readme + "\n\n" + history,
+          include_package_data=True,
+          package_data={},
+          entry_points={
+              "console_scripts": [
+                  "clique = clique.__main__:app.run",
+              ]
+          },
+          **pkg_info
+    )

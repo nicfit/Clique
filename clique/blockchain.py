@@ -8,7 +8,7 @@ from jwcrypto.jwt import JWT
 from .keystore import keystore
 from .common import JsonType, Identity, thumbprint
 
-from .log import getLogger
+from . import getLogger
 log = getLogger(__name__)
 
 
