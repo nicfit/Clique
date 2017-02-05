@@ -8,23 +8,23 @@ Invented by Andrew Biggs <balthorium@gmail.com>, and contributed to by others.
 
 Status
 ------
-.. image:: https://img.shields.io/pypi/v/clique.svg
-   :target: https://pypi.python.org/pypi/clique/
+.. image:: https://img.shields.io/pypi/v/clique-blockchain.svg
+   :target: https://pypi.python.org/pypi/clique-blockchain/
    :alt: Latest Version
-.. image:: https://img.shields.io/pypi/status/clique.svg
-   :target: https://pypi.python.org/pypi/clique/
+.. image:: https://img.shields.io/pypi/status/clique-blockchain.svg
+   :target: https://pypi.python.org/pypi/clique-blockchain/
    :alt: Project Status
-.. image:: https://travis-ci.org/nicfit/clique.svg?branch=master
-   :target: https://travis-ci.org/nicfit/clique
+.. image:: https://travis-ci.org/nicfit/Clique.svg?branch=master
+   :target: https://travis-ci.org/nicfit/Clique
    :alt: Build Status
-.. image:: https://img.shields.io/pypi/l/clique.svg
-   :target: https://pypi.python.org/pypi/clique/
+.. image:: https://img.shields.io/pypi/l/clique-blockchain.svg
+   :target: https://pypi.python.org/pypi/clique-blockchain/
    :alt: License
-.. image:: https://img.shields.io/pypi/pyversions/clique.svg
-   :target: https://pypi.python.org/pypi/clique/
+.. image:: https://img.shields.io/pypi/pyversions/clique-blockchain.svg
+   :target: https://pypi.python.org/pypi/clique-blockchain/
    :alt: Supported Python versions
-.. image:: https://coveralls.io/repos/nicfit/clique/badge.svg
-   :target: https://coveralls.io/r/nicfit/clique
+.. image:: https://coveralls.io/repos/nicfit/Clique/badge.svg
+   :target: https://coveralls.io/r/nicfit/Clique
    :alt: Coverage Status
 
 Features
@@ -65,7 +65,7 @@ virtualenv, use ``setup.py`` in the standard fashion.
 
     # To install
     $ ./setup.py install
-    $ bin/example.py
+    $ clique examples authchain
 
 .. note::
    Developers should skip the install since testing requires pushing new
@@ -82,7 +82,7 @@ To initialize the environment to run against your working copy use the
 
     # To develop 
     $ ./setup.py develop
-    $ bin/example.py
+    $ clique examples authchain
 
 For running tests and performing other developer tasks more dependencies are
 required.
