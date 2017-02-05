@@ -17,7 +17,7 @@ default_context:
     py26: "no"
     py27: "no"
     py33: "no"
-    py34: "yes"
+    py34: "no"
     py35: "yes"
     py36: "yes"
     py37: "yes"

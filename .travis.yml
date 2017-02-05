@@ -1,13 +1,13 @@
 language: python
 
 python:
-  - "3.4"
   - "3.5"
   - "3.6"
   - "3.7-dev"
 
 cache:
     pip: true
+
 install:
     - pip install -U -r requirements/test.txt
     - pip install coveralls

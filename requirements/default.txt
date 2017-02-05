@@ -1,4 +1,4 @@
 cryptography
 jwcrypto
 requests
-nicfit.py
+nicfit.py>0.5.10
