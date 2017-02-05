@@ -3,6 +3,7 @@
 import os
 import re
 import sys
+import warnings
 from setuptools import setup, find_packages
 
 
@@ -10,7 +11,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Operating System :: POSIX",
     "Natural Language :: English",
-    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.4",
     "Programming Language :: Python :: 3.5",
@@ -98,23 +99,26 @@ if sys.argv[1:] and sys.argv[1] == "--release-name":
     print(pkg_info["release_name"])
     sys.exit(0)
 else:
-    setup(classifiers=classifiers,
-          package_dir={"": "."},
-          packages=find_packages(".",
-                                 exclude=["tests", "tests.*"]),
-          zip_safe=False,
-          platforms=["Any"],
-          keywords=["clique"],
-          install_requires=requirements("default.txt"),
-          tests_require=requirements("test.txt"),
-          test_suite="./tests",
-          long_description=readme + "\n\n" + history,
-          include_package_data=True,
-          package_data={},
-          entry_points={
-              "console_scripts": [
-                  "clique = clique.__main__:app.run",
-              ]
-          },
-          **pkg_info
-    )
+    # The extra command line options we added cause warnings, quell that.
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message="Unknown distribution option")
+        setup(classifiers=classifiers,
+              package_dir={"": "."},
+              packages=find_packages(".",
+                                     exclude=["tests", "tests.*"]),
+              zip_safe=False,
+              platforms=["Any"],
+              keywords=["clique"],
+              install_requires=requirements("default.txt"),
+              tests_require=requirements("test.txt"),
+              test_suite="./tests",
+              long_description=readme + "\n\n" + history,
+              include_package_data=True,
+              package_data={},
+              entry_points={
+                  "console_scripts": [
+                      "clique = clique.__main__:app.run",
+                  ]
+              },
+              **pkg_info
+        )
