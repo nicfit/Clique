@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
-import sys
 import json
-import logging
-from pathlib import Path
-from argparse import FileType, RawDescriptionHelpFormatter
+from nicfit import Application, getLogger
+from argparse import RawDescriptionHelpFormatter
 
-from .args import ArgumentParser
-from ..log import simpleConfig, log
-from .. import KeyNotFoundError, useCliqueServer
+from ..__about__ import __version__
+from .. import useCliqueServer
+from . import keygen   # noqa
+from . import identity  # noqa
 
-clique_env = \
-    {
-        "CLIQUE_D": Path("~/.clique").expanduser(),
-    }
+log = getLogger(__name__)
 
 
 def blockchain(args):
@@ -25,9 +21,13 @@ def blockchain(args):
 def main(args):
     log.debug("Args: {}".format(args))
 
-    if "func" in args:
-        return args.func(args)
+    if args.server:
+        useCliqueServer(args.server)
+
+    if args.command_func:
+        return args.command_func(args)
     else:
+        # XXX: not sure if you can happen anymore
         print("Noting to do, see --help")
         return 1
 
@@ -42,38 +42,7 @@ Use '%(prog)s <subcmd> --help' for detailed info about a particular command.
 """  # noqa
 
 
-def _argsParser():
-    arg_parser = ArgumentParser(prog="clique", add_log_args=True, epilog=EPILOG,
-                                formatter_class=RawDescriptionHelpFormatter)
-    arg_parser.add_argument("--server", metavar="URL",
-                            help="URL of remote key server.")
-    sub_parser = arg_parser.add_subparsers(title="Subcommands", dest="subcmd")
-
-    # keygen
-    from . import keygen
-    cmd_parser = keygen.init(clique_env, sub_parser)
-    cmd_parser.set_defaults(func=keygen.run)
-
-    # identity
-    from . import identity
-    cmd_parser = identity.init(clique_env, sub_parser)
-    cmd_parser.set_defaults(func=identity.run)
-
-    # blockchain
-    blockchain_parser = sub_parser.add_parser("blockchain",
-                                              help="Read blockchains.")
-    blockchain_parser.add_argument("chainfile", metavar="FILE",
-            type=FileType('r'),
-            help="File containing serialized block chain.")
-    blockchain_parser.set_defaults(func=blockchain)
-
-    contract_parser = sub_parser.add_parser("contract_example", help="Toy")
-    contract_parser.set_defaults(func=contract_example)
-
-    return arg_parser
-
-
-def contract_example(_):
+def contract_example(args):
     from uuid import uuid4
     import requests
     from clique.blockchain import BlockChain, Block, Identity
@@ -190,21 +159,26 @@ def contract_example(_):
         downloaded_chain.validate(new_chain[0].hash)
 
 
-if __name__ == "__main__":
-    simpleConfig(logging.WARN)
-    arg_parser = _argsParser()
+argparse_opts = {"epilog": EPILOG,
+                 "formatter_class": RawDescriptionHelpFormatter,
+                }
+app = Application(main, name="clique", version=__version__,
+                  extra_arg_parser_opts=argparse_opts)
+app.arg_parser.add_argument("--server", metavar="URL",
+                            help="URL of remote key server.")
+# blockchain
+"""
+#blockchain_parser = sub_parser.add_parser("blockchain",
+#                                          help="Read blockchains.")
+#blockchain_parser.add_argument("chainfile", metavar="FILE",
+#        type=FileType('r'),
+#        help="File containing serialized block chain.")
+#blockchain_parser.set_defaults(func=blockchain)
+#
+#contract_parser = sub_parser.add_parser("contract_example", help="Toy")
+#contract_parser.set_defaults(func=contract_example)
+"""
+app.enableCommands(title="Subcommands", dest="subcmd")
 
-    try:
-        args = arg_parser.parse_args()
-        if args.server:
-            useCliqueServer(args.server)
-    except Exception as ex:
-        arg_parser.error(str(ex))  # does not return
-
-    try:
-        sys.exit(main(args) or 0)
-    except KeyNotFoundError as ex:
-        print(str(ex), file=sys.stderr)
-        sys.exit(2)
-    except KeyboardInterrupt:
-        sys.exit(0)
+if __name__ == "__main__":  # pragma: nocover
+    app.run()

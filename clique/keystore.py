@@ -45,6 +45,7 @@ class LocalKeyStore(KeyStoreABC):
     def __contains__(self, tp):
         return tp in self._keys
 
+
 _global_keystore = LocalKeyStore()
 
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import urllib.parse
+from pathlib import Path
 from collections import OrderedDict
 
 from jwcrypto.jwk import JWK
@@ -8,6 +9,8 @@ from jwcrypto.common import base64url_encode, json_encode, json_decode
 
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
+
+CLIQUE_D = Path("~/.clique").expanduser()
 
 
 class Uri(urllib.parse.ParseResult):

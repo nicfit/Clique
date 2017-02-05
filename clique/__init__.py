@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from nicfit import getLogger
-from .__about__ import __version__ as version
+from .__about__ import __version__ as version                         # noqa
 from .common import Identity                                          # noqa
 from .blockchain import BlockChain                                    # noqa
 from .authchain import Chain as AuthChain                             # noqa
@@ -10,6 +10,7 @@ from .identitychain import Chain as IdentityChain                     # noqa
 from . import blockchain, identitychain, authchain                    # noqa
 
 log = getLogger(__package__)
+
 
 def chainFactory(godblock, serialization):
     chain_types = {"identity_XXX": IdentityChain,

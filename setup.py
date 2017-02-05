@@ -117,7 +117,7 @@ else:
               package_data={},
               entry_points={
                   "console_scripts": [
-                      "clique = clique.__main__:app.run",
+                      "clique = clique.app.__main__:app.run",
                   ]
               },
               **pkg_info

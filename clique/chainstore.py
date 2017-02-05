@@ -45,6 +45,8 @@ class LocalChainStore(ChainStoreABC):
 
     def clear(self):
         self._chains = {}
+
+
 _global_chainstore = LocalChainStore()
 
 
