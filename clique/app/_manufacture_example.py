@@ -1,8 +1,12 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from clique import *
+from clique import Identity, IdentityChain
+
+###
+# WIP: will raise NotImplemented
+###
 
 NUM_DEVICES = 10
+
 
 def deviceTest(gbock_hash, chain_data):
     idchain = IdentityChain.deserialize(chain_data)
@@ -13,11 +17,9 @@ def deviceTest(gbock_hash, chain_data):
     device_ident = Identity(idchain[0].subject, Identity.generateKey())
     idchain.addBlock(device_ident, pkt=device_ident.thumbprint)
     idchain.validate(gbock_hash)
-    import ipdb; ipdb.set_trace()
-    pass
 
 
-if __name__ == "__main__":
+def main():
     manufacturer_key = Identity.generateKey()
     manufacturer = Identity("manufacturer1", manufacturer_key)
 
@@ -32,5 +34,6 @@ if __name__ == "__main__":
     for i in range(NUM_DEVICES):
         deviceTest(device_idchains[i][0], device_idchains[i][1].serialize())
 
-    #import ipdb; ipdb.set_trace()
-    pass
+
+if __name__ == "__main__":
+    main()

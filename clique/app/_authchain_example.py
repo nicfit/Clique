@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import sys
-from nose.tools import *
+from nose.tools import assert_equals, assert_dict_equal
 
 from jwcrypto.jwk import JWK
 from clique.authchain import Grant
 from clique import Identity, IdentityChain, AuthChain, keystore, chainstore
-from clique import useCliqueServer
+from clique import useCliqueServer  # noqa
 
 
 def main():
-    #useCliqueServer("https://outer-planes.net/clique")
+    #useCliqueServer("https://outer-planes.net/clique")   # noqa
 
     for id in global_identities:
         keystore().add(id.key)
@@ -144,7 +144,7 @@ def authchain():
 
 
 alice = Identity("acct:alice@example.com",
-                 JWK(**{#"cmt": "alice",
+                 JWK(**{#"cmt": "alice",  # noqa
                         "crv": "P-256",
                         "d": "z-CuqNSEkOyoXWlGcoqgaq_nh6WlgtcV8ZroeNQ5AS0",
                         "kid": "ZansZqsUXsTucfJC6t3ApBXAsXfR4spy4MmFOHek5Qc",
@@ -154,7 +154,7 @@ alice = Identity("acct:alice@example.com",
                         "y": "xkJVvFpTuTXou0xkXpiVlsldjH10Qj5831ZJbrFHNPQ"
                    }))
 bob = Identity("acct:bob@example.com",
-               JWK(**{#"cmt": "bob",
+               JWK(**{#"cmt": "bob",  # noqa
                       "crv": "P-256",
                       "d": "fgug1klBZUQr83wVDVwLj9odTOwfTQ9wbTw2rMZyhJQ",
                       "kid": "SETKquASXDG0k5ERRAa4kvXNAGGWfkZxvfEOxks9tHU",
@@ -164,7 +164,7 @@ bob = Identity("acct:bob@example.com",
                       "y": "CCnBEEsnzAMU0YbyFRrDPuHoDHGD6mt54RwWtLH8e3E"
                  }))
 jack = Identity("acct:jack@example.com",
-                JWK(**{#"cmt": "jack",
+                JWK(**{#"cmt": "jack",  # noqa
                        "crv": "P-256",
                        "d": "0FYEyIkPZT3xAKh226266nqUg5e9NWl88-TFn0pLcmY",
                        "kid": "OsY_R82yHLKXxVVZl-f5aBaqpN4yH9wSyeLwxTy_8Lo",
@@ -174,7 +174,7 @@ jack = Identity("acct:jack@example.com",
                        "y": "5digz6ao89Kw9p50VRk9P0SbbKwrqwQdBMqoKhjTCu8"
                       }))
 diane = Identity("acct:diane@example.com",
-                 JWK(**{#"cmt": "diane",
+                 JWK(**{#"cmt": "diane",  # noqa
                         "crv": "P-256",
                         "d": "xqoqU02XMyVQfTYEwLDt1kNGM9IOqvfrbMk-K-c_thM",
                         "kid": "2PgeWCJIN2Btmp_FcfIqephBFAYmJ8Gp0v1XZ0Gm-c8",
@@ -184,7 +184,7 @@ diane = Identity("acct:diane@example.com",
                         "y": "2i4A23HuPwY7yu_p9-sb3xM9uGQkBD7jxOJ20Vx1mzY"
                        }))
 steve = Identity("acct:steve@example.com",
-                 JWK(**{#"cmt": "steve",
+                 JWK(**{#"cmt": "steve",  # noqa
                         "crv": "P-256",
                         "d": "5yOV5PUmopGZUEZ1QJcnwvb8dMQaBv275h87QaK1U3o",
                         "kid": "NP7aCbQTrZEKFfnNYxU1mPgDdYLokQt13cpFAEE7zAk",
@@ -199,4 +199,3 @@ global_identities = [alice, bob, jack, diane, steve]
 
 if __name__ == "__main__":
     sys.exit(main() or 0)
-

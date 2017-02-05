@@ -1,6 +1,13 @@
 clique package
 ==============
 
+Subpackages
+-----------
+
+.. toctree::
+
+    clique.app
+
 Submodules
 ----------
 
@@ -16,6 +23,14 @@ clique.blockchain module
 ------------------------
 
 .. automodule:: clique.blockchain
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+clique.chainstore module
+------------------------
+
+.. automodule:: clique.chainstore
     :members:
     :undoc-members:
     :show-inheritance:
@@ -36,10 +51,10 @@ clique.identitychain module
     :undoc-members:
     :show-inheritance:
 
-clique.log module
------------------
+clique.keystore module
+----------------------
 
-.. automodule:: clique.log
+.. automodule:: clique.keystore
     :members:
     :undoc-members:
     :show-inheritance:
