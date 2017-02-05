@@ -1,3 +1,4 @@
 cryptography
 jwcrypto
 requests
+nicfit.py
