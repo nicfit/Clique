@@ -39,7 +39,12 @@ def getPackageInfo():
                 m = rex.match(line.strip())
                 if not m:
                     continue
-                info_dict[what] = m.groups()[0]
+                if what == "name":
+                    # Clique is taken on PyPi, change
+                    name = "{}-blockchain".format(m.groups()[0])
+                else:
+                    name = m.groups()[0]
+                info_dict[what] = name
 
     if sys.version_info[:2] >= (3, 4):
         vparts = info_dict["version"].split("-", maxsplit=1)
