@@ -3,7 +3,7 @@ watchdog==0.8.3
 tox==2.9.1
 flake8==3.4.1
 twine==1.9.1
-Sphinx==1.6.3
+Sphinx==1.7.4
 check-manifest==0.35
 #gitchangelog
 git+https://github.com/nicfit/gitchangelog.git
