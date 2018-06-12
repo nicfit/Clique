@@ -1,4 +1,4 @@
 cryptography==2.2.2
 jwcrypto==0.4.2
-requests==2.18.4
+requests==2.19.0
 nicfit.py>=0.5.10
